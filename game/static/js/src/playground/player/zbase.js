@@ -62,7 +62,7 @@ class Player extends AcGameObject {
         let color = "orange";
         let speed = this.playground.height * 0.5;
         let move_length = this.playground.height * 1;
-        new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground * 0.01);
+        new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);
     }
 
     get_dist(x1, y1, x2, y2) {
@@ -81,24 +81,25 @@ class Player extends AcGameObject {
 
     is_attacked(angle, damage) {
         this.radius -= damage;
+        //console.log(this.radius);
         if (this.radius < 10) {
             this.destroy();
+            //console.log("die");
             return false;
         }
         this.damage_x = Math.cos(angle);
         this.damage_y = Math.sin(angle);
-        this.damage_speed = damage * 2;
+        this.damage_speed = damage * 100;
     }
 
     update() {
-       // if (this.damage_speed < this.eps){
-            //this.vx = this.vy = 0;
-            //this.move_length = 0;
-            //this.x = this.damage_x * this.damage_speed * this.timedelta / 1000;
-            //this.y = this.damage_y * this.damage_speed * this.timedelta / 1000;
-            //this.damage_speed *= this.friction;
-         //   ;
-       // } else {
+        if (this.damage_speed > 10){
+            this.vx = this.vy = 0;
+            this.move_length = 0;
+            this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
+            this.y += this.damage_y * this.damage_speed * this.timedelta / 1000;
+            this.damage_speed *= this.friction;
+        } else {
             if (this.move_length < this.eps) {
                 this.move_length = 0;
                 this.vx = this.vy = 0;
@@ -113,7 +114,7 @@ class Player extends AcGameObject {
                 this.y += this.vy * moved;
                 this.move_length -= moved;
             }
-        //}
+        }
         this.render();
     }
 
