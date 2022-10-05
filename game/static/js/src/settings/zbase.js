@@ -27,6 +27,20 @@ class Settings {
                 <button>登录</button>
             </div>
         </div>
+        <div class="ac-game-settings-error-messages">
+            用户名密码错误
+        </div>
+        <div class="ac-game-settings-option">
+            注册
+        </div>
+        <br>
+        <div class="ac-game-settings-acwing">
+            <img width="30" src="https://cdn.acwing.com/media/article/image/2021/11/18/1_ea3d5e7448-logo64x64_2.png">
+            <div>
+            <br>
+                Acwing一键登录
+            </div>
+        </div>
     </div>
     <div class="ac-game-settings-register">
     </div>
