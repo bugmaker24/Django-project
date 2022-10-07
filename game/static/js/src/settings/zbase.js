@@ -131,6 +131,10 @@ class Settings {
         this.$register_login.click(function() {
             outer.login();
         });
+
+        this.$register_submit.click(function(){
+            outer.register_on_remote();
+        });
     }
 
     login_on_remote() {  // 在远程服务器上登录
@@ -158,10 +162,45 @@ class Settings {
     }
 
     register_on_remote() {  // 在远处服务器上注册
-
+        let outer = this;
+        let username = this.$register_username.val();
+        let password = this.$register_password.val();
+        let password_confirm = this.$register_password_confirm.val();
+        this.$register_error_message.empty();
+        //console.log(username, password, password_confirm)
+        $.ajax({
+            url: "https://app3533.acapp.acwing.com.cn/settings/register/",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+                password_confirm: password_confirm,
+            },
+            success: function(resp) {
+                console.log(resp);
+                if(resp.result === "success") {
+                    location.reload();  //刷新页面
+                } else {
+                    outer.$register_error_message.html(resp.result);
+                }
+            }
+        });
     }
 
     logout_on_remote(){  // 在远程服务器上登出
+        if (this.platform === "ACAPP") return false;
+
+        $.ajax({
+            url: "https://app3533.acapp.acwing.com.cn/settings/logout/",
+            type: "GET",
+            success: function(resp){
+                console.log(resp);
+                if (resp.result === "success"){
+                    location.reload();
+                }
+
+            }
+        });
 
     }
 
